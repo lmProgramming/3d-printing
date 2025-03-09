@@ -1,4 +1,5 @@
 import trimesh
+from stl.stl import visualize_stl
 
 outer_width = 2.6
 outer_depth = 17.0
@@ -25,3 +26,5 @@ stl: trimesh.Trimesh = trimesh.util.concatenate(
 
 filename = "kitchen_fix/sliding_cover.stl"
 stl.export(filename)
+
+visualize_stl(stl)
