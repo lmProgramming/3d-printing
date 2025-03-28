@@ -1,0 +1,30 @@
+import trimesh
+from stl.stl import visualize_stl
+
+outer_width = 3.6
+outer_depth = 17.8
+outer_height = 21.8
+wall_thickness = 0.3
+
+left_wall: trimesh.Trimesh = trimesh.creation.box(
+    extents=[wall_thickness, outer_depth, outer_height])
+right_wall: trimesh.Trimesh = trimesh.creation.box(
+    extents=[wall_thickness, outer_depth, outer_height])
+
+front_wall: trimesh.Trimesh = trimesh.creation.box(
+    extents=[outer_width, wall_thickness, outer_height])
+
+left_wall.apply_translation(
+    [-outer_width / 2 + wall_thickness / 2, 0, outer_height / 2])
+right_wall.apply_translation(
+    [outer_width / 2 - wall_thickness / 2, 0, outer_height / 2])
+front_wall.apply_translation(
+    [0, -outer_depth / 2 + wall_thickness / 2, outer_height / 2])
+
+stl: trimesh.Trimesh = trimesh.util.concatenate(
+    [left_wall, right_wall, front_wall])
+
+filename = "kitchen_fix_v2/sliding_cover.stl"
+stl.export(filename)
+
+visualize_stl(stl)
